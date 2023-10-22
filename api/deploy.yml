@@ -26,6 +26,6 @@ spec:
       imagePullSecrets: 
       - name: github-packages-secret
       volumeMounts:
-        - mountPath: "/app/data"
+        - mountPath: "/api/data"
           name: logs-pv-storage
   
