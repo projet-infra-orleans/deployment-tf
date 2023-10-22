@@ -9,4 +9,4 @@ spec:
     port: 80
     targetPort: 4200
   selector:
-    app: app-service
+    app: app-deployment
