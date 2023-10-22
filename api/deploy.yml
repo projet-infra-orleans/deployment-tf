@@ -5,6 +5,10 @@ metadata:
   labels:
     app: api
 spec:
+ volumes:
+    - name: logs-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
   replicas: 1
   selector:
     matchLabels:
