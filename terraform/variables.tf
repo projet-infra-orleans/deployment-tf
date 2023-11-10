@@ -8,23 +8,6 @@ variable "resource_group_location" {
 }
 
 
-variable "prefix" {
-    type = string
-}
-
 variable "environment" {
-    type = string
-}
-
-variable  "app_appinsights_swag" {
-    type = string
-}
-
-
-variable  "static_site_swag" {
-    type = string
-}
-
-variable  "app_name" {
     type = string
 }
