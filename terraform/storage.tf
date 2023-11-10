@@ -6,7 +6,7 @@ resource "azurerm_storage_account" "stockage" {
   account_replication_type = "RA-GRS"
 
   tags = {
-    environment = "staging"
+    environment = "${var.environment}"
   }
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
