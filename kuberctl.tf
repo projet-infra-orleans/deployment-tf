@@ -10,9 +10,9 @@ resource "kubectl_manifest" "app_service" {
     yaml_body = "${file("${path.module}/app/service.yaml")}"
 }
 
-/* resource "kubectl_manifest" "app_ingress" {
+resource "kubectl_manifest" "app_ingress" {
     yaml_body = "${file("${path.module}/app/domain-ingress.yaml")}"
-} */
+}
 
 
 /*
@@ -38,7 +38,7 @@ resource "kubectl_manifest" "api_pvc" {
     yaml_body = "${file("${path.module}/api/pv-claim.yaml")}"
 }
 
-/*resource "kubectl_manifest" "api_ingress" {
+resource "kubectl_manifest" "api_ingress" {
     yaml_body = "${file("${path.module}/api/domain-ingress.yaml")}"
-} */
+}
 
