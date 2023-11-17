@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: app-deployment
-  labels:
-    app: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app
+      app: app-deployment
   template:
     metadata:
       labels:
-        app: app
+        app: app-deployment
     spec:
       containers:
-      - name: app
-        image:  ghcr.io/projet-infra-orleans/pandemic-infra/app:main
-        ports:
-        - containerPort: 80
-      imagePullSecrets: 
-      - name: github-packages-secret
-  
+        - name: app
+          image: ghcr.io/projet-infra-orleans/pandemic-infra/app:main
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+          limit:
+            memory: 500Mo
+      imagePullSecrets:
+        - name: github-packages-secret

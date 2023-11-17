@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: default
   name: logs-pv-claim
 spec:
   storageClassName: logs

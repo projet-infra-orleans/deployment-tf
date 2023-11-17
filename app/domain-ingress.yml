@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-ingress
   namespace: default
+  name: app-ingress
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/proxy-pass: "http://app-service"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-app
 spec:
-  # ingressClassName: nginx
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.host }}
-  #   secretName: tls-secret
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - app.gr1.froissant.work
+      secretName: tls-secret
   rules:
-    - host: gr1.froissant.work
+    - host: app.gr1.froissant.work
       http:
         paths:
           - path: /
@@ -21,3 +21,5 @@ spec:
             backend:
               service:
                 name: app-service
+                port:
+                  number: 80
