@@ -1,5 +1,5 @@
 resource "helm_release" "ingress" {
-  depends_on       = [azurerm_key_vault_access_policy.aks_access_to_kv]
+  # depends_on       = [azurerm_key_vault_access_policy.aks_access_to_kv]
   name             = "${local.prefix}-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx/"
   chart            = "ingress-nginx"
