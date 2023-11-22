@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: certsync
+
+--- 
+
 apiVersion: spv.no/v1
 kind: AzureKeyVaultSecret
 metadata:
@@ -5,7 +12,7 @@ metadata:
   namespace: certsync
 spec:
   vault:
-    name: trfrm-kv
+    name: rgvaultkey
     object:
       name: nginx-cert-test
       type: certificate
