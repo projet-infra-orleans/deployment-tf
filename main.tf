@@ -106,8 +106,8 @@ resource "helm_release" "ingress" {
   name             = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx/"
   chart            = "ingress-nginx"
+  version          = "4.7.1"
   namespace        = "ingress-ns"
-  create_namespace = true
 }
 
 resource "helm_release" "akv2k8" {
@@ -116,7 +116,6 @@ resource "helm_release" "akv2k8" {
   repository       = "https://charts.spvapi.no"
   chart            = "akv2k8s"
   namespace        = "akv2k8s"
-  create_namespace = true
 }
 
 resource "kubectl_manifest" "create_namespace" {
