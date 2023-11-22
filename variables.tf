@@ -2,6 +2,10 @@ variable "resource_group_name" {
     type = string
 }
 
+variable "vault_key_name" {
+    type = string
+}
+
 variable "dns_prefix" {
     type = string
 }
