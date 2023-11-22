@@ -63,18 +63,18 @@ provider "helm" {
   debug   = true
   kubernetes {
     /* config_path = "~/.kube/config" */
-  host = data.azurerm_kubernetes_cluster.aks.kube_config.0.host
-  client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
-  client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = data.azurerm_kubernetes_cluster.aks.kube_config[0].host
+  client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].client_key)
+  client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate)
+  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate)
   }
 }
 
 provider "kubernetes" {
-  host = data.azurerm_kubernetes_cluster.aks.kube_config.0.host
-  client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
-  client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = data.azurerm_kubernetes_cluster.aks.kube_config[0].host
+  client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].client_key)
+  client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate)
+  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate)
 }
 
 data "azurerm_client_config" "current" {}
@@ -108,6 +108,7 @@ resource "helm_release" "ingress" {
   chart            = "ingress-nginx"
   version          = "4.7.1"
   namespace        = "ingress-ns"
+  create_namespace = true
 }
 
 resource "helm_release" "akv2k8" {
@@ -116,6 +117,7 @@ resource "helm_release" "akv2k8" {
   repository       = "https://charts.spvapi.no"
   chart            = "akv2k8s"
   namespace        = "akv2k8s"
+  create_namespace = true
 }
 
 resource "kubectl_manifest" "create_namespace" {
