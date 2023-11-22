@@ -8,17 +8,17 @@ metadata:
 spec:
   tls:
   - hosts:
-    - nginxtesttom.com
+    - api.gr1.froissant.work
     secretName: nginx-cert
   rules:
-  - host: nginxtesttom.com
+  - host: api.gr1.froissant.work
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: test
+            name: api-service
             port:
               number: 80
               
