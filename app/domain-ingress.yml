@@ -11,7 +11,7 @@ spec:
   tls:
     - hosts:
         - app.gr1.froissant.work
-      secretName: tls-secret
+      secretName: tls-app-secret
   rules:
     - host: app.gr1.froissant.work
       http:

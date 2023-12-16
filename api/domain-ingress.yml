@@ -12,7 +12,7 @@ spec:
   tls:
     - hosts:
         - api.gr1.froissant.work
-      secretName: tls-secret
+      secretName: tls-api-secret
   rules:
     - host: api.gr1.froissant.work
       http:
