@@ -15,11 +15,14 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/projet-infra-orleans/pandemic-infra/app:main
+          image: ghcr.io/projet-infra-orleans/pandemic-infra/app:v3.1.1
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent
           limit:
             memory: 500Mo
+          env:
+            - name: API_URL
+              value: https://api.gr1.froissant.work/pandemic
       imagePullSecrets:
         - name: github-packages-secret

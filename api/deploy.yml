@@ -24,7 +24,7 @@ spec:
             claimName: logs-pv-claim
       containers:
         - name: api
-          image: ghcr.io/projet-infra-orleans/pandemic-infra/api:main
+          image: ghcr.io/projet-infra-orleans/pandemic-infra/api:v3.1.1
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -32,5 +32,10 @@ spec:
               name: logs-pv-storage
           limit:
             memory: 1Go
+          env:
+            - name: DATABASE_CONNECTION_URL
+              value: mongodb+srv://dbPandemic:dbPandemicPassword@atlascluster.ar6ehgx.mongodb.net/?retryWrites=true&w=majority
+            - name: CLIENT_URL
+              value: https://app.gr1.froissant.work
       imagePullSecrets:
         - name: github-packages-secret
