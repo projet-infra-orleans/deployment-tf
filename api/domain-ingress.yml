@@ -6,15 +6,14 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt-api
-    # nginx.ingress.kubernetes.io/proxy-pass: "http://api-service:8080"
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - api.gr1.froissant.work
+        - api.${dns}
       secretName: tls-api-secret
   rules:
-    - host: api.gr1.froissant.work
+    - host: api.${dns}
       http:
         paths:
           - path: /

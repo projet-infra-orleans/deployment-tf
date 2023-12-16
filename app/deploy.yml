@@ -23,6 +23,6 @@ spec:
             memory: 500Mo
           env:
             - name: API_URL
-              value: https://api.gr1.froissant.work/pandemic
+              value: https://api.${dns}/pandemic
       imagePullSecrets:
         - name: github-packages-secret

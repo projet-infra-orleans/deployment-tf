@@ -10,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - app.gr1.froissant.work
+        - app.${dns}
       secretName: tls-app-secret
   rules:
-    - host: app.gr1.froissant.work
+    - host: app.${dns}
       http:
         paths:
           - path: /

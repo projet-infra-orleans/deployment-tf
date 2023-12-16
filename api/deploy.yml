@@ -36,6 +36,6 @@ spec:
             - name: DATABASE_CONNECTION_URL
               value: mongodb+srv://dbPandemic:dbPandemicPassword@atlascluster.ar6ehgx.mongodb.net/?retryWrites=true&w=majority
             - name: CLIENT_URL
-              value: https://app.gr1.froissant.work
+              value: https://app.${dns}
       imagePullSecrets:
         - name: github-packages-secret

@@ -22,3 +22,7 @@ variable "resource_group_location" {
 variable "environment" {
     type = string
 }
+
+variable "dns" {
+    type = string
+}
