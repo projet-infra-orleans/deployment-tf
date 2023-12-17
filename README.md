@@ -23,6 +23,20 @@ Ensuite, on peut synchroniser le state :
 terraform apply
 ```
 
+## Changer l'IP
+
+Dans le cluster AKS, faire :
+
+```
+kubectl get services -n ingress-basic
+```
+
+Récupérer le "external-ip", et ajouter dans Gandi, dans "Nom de domaine", "froissant.work", "Enregistrement DNS", le sous-domaine correspondant :
+
+- A | \*.$TF_VAR_environment.gr1 | IP | 300
+
+À faire dynamiquement quand on aura les accès à l'API Gandi.
+
 # Erreurs connues
 
 Erreur :
