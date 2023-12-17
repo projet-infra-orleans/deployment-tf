@@ -9,7 +9,18 @@ az login
 Ensuite il faut se connecter au state distant :
 
 ```
-terraform init -backend-config="resource_group_name=groupe-1-infra-deploy" -backend-config="storage_account_name=gr1infradeploystock" -backend-config="container_name=tfstate" -backend-config="key=terraform.tfstate"
+terraform init -backend-config="resource_group_name=groupe-1-infra-deploy" -backend-config="storage_account_name=gr1infradeploystock" -backend-config="container_name=tfstateqa" -backend-config="key=terraform.tfstate"
+```
+
+Définir le container_name en fonction de l'environnement démarrer, afin de garder un state différent par environnement. Par exemple :
+
+- tfstateqa
+- tfstatepr
+
+Ensuite, on peut synchroniser le state :
+
+```
+terraform apply
 ```
 
 # Erreurs connues
