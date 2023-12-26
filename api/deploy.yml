@@ -1,32 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: api-deployment
-  labels:
-    app: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api
+      app: api-deployment
   template:
+    # annotations:
+    #   vault.hashicorp.com/agent-inject: "true"
+    #   vault.hashicorp.com/role: "internal-app"
+    #   vault.hashicorp.com/agent-inject-secret-database-config.txt: "internal/data/database/config"
     metadata:
       labels:
-        app: api
+        app: api-deployment
     spec:
+      # serviceAccountName: internal-app
       volumes:
-      - name: logs-pv-storage
-        persistentVolumeClaim:
-          claimName: logs-pv-claim
+        - name: logs-pv-storage
+          persistentVolumeClaim:
+            claimName: logs-pv-claim
       containers:
-      - name: api
-        image:  ghcr.io/projet-infra-orleans/pandemic-infra/api:main
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - mountPath: "/api/data"
-          name: logs-pv-storage
-      imagePullSecrets: 
-      - name: github-packages-secret
-     
-  
+        - name: api
+          image: ghcr.io/projet-infra-orleans/pandemic-infra/api:v3.1.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/api/data"
+              name: logs-pv-storage
+          limit:
+            memory: 1Go
+          env:
+            - name: DATABASE_CONNECTION_URL
+              value: mongodb+srv://dbPandemic:dbPandemicPassword@atlascluster.ar6ehgx.mongodb.net/?retryWrites=true&w=majority
+            - name: CLIENT_URL
+              value: https://app.${dns}
+      imagePullSecrets:
+        - name: github-packages-secret
