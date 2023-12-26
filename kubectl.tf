@@ -28,7 +28,7 @@ resource "kubectl_manifest" "app_ingress" {
 */
 
 resource "kubectl_manifest" "api_deployment" {
-    depends_on = [kubectl_manifest.api_pvc]
+    depends_on = [kubectl_manifest.api_pvc, kubectl_manifest.secret_url_mongo]
 
     yaml_body = "${templatefile("${path.module}/api/deploy.yml", {
         dns = local.dns
