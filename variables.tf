@@ -26,3 +26,7 @@ variable "environment" {
 variable "dns" {
     type = string
 }
+
+variable "vault_key_name" {
+    type = string
+}
