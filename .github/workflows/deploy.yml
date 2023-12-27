@@ -42,20 +42,31 @@
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-name: 'Terraform'
+name: 'Deploy QA or PROD'
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
+    branches: [ "main", "qualif" ]
+
+env:
+  DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+  DEPLOY_PASSWORD : ${{ secrets.DEPLOY_PASSWORD }}
+  TF_VAR_environment : ${{ secrets.TF_VAR }}
+  AZ_TOKEN  : ${{ secrets.AZ_TOKEN }}
+  TOKEN_GANDI  : "${{ secrets.TOKEN_GANDI }}
 
 permissions:
   contents: read
 
 jobs:
+  Kubectl:
+   name: 'Kubectl'
+    runs-on: 
+    environment: production
+    
   terraform:
     name: 'Terraform'
-    runs-on: ubuntu-latest
+    runs-on: 
     environment: production
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -91,3 +102,4 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
+  
