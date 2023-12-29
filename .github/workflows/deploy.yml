@@ -7,7 +7,7 @@ on:
 env:
   DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
   DEPLOY_PASSWORD : ${{ secrets.DEPLOY_PASSWORD }}
-  TF_VAR_environment : ${{ secrets.TF_VAR }}
+  TF_VAR_environment : "pr"
   AZ_TOKEN  : ${{ secrets.AZ_TOKEN }}
   TOKEN_GANDI  : ${{ secrets.TOKEN_GANDI }}
 
