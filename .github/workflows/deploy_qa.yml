@@ -46,6 +46,6 @@ jobs:
     - name: récupérer l ip 
       run: |
         ip_address=$(kubectl get svc ingress-nginx-controller -n ingress-basic -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-      
+        echo "ip_address=$ip_address" >> $GITHUB_ENV
     - name: mettre à jour gandi 
-      run: ./update-gandi-ip.sh $ip_address ${{ env.TOKEN_GANDI }} froissant.work ${{ env.TF_VAR_environment }}
+      run: ./update-gandi-ip.sh ${{ env.ip_address }} ${{ env.TOKEN_GANDI }} froissant.work ${{ env.TF_VAR_environment }}
