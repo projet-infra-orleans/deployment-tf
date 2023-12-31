@@ -1,6 +1,3 @@
-resource_group_name = "groupe-1-infra-deploy"
 cluster_name = "aks"
-stockage_name = "gr1infradeploystock"
 dns_prefix="aks-dns"
 dns = "gr1.froissant.work"
-vault_key_name = "gr1-az-key-vault"
