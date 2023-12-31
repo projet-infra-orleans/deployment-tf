@@ -32,7 +32,8 @@ jobs:
       run: az account set --subscription ${{ env.AZ_TOKEN }}
 
     - name: synchronise l historique
-      run: terraform init -backend-config="resource_group_name=groupe-1-infra-deploy" -backend-config="storage_account_name=gr1infradeploystock" -backend-config="container_name=tfstate$TF_VAR_environment" -backend-config="key=terraform.tfstate"
+      modifie cette ligne pour mettre tes clusters à toi 
+      #run: terraform init -backend-config="resource_group_name=groupe-1-infra-deploy" -backend-config="storage_account_name=gr1infradeploystock" -backend-config="container_name=tfstate$TF_VAR_environment" -backend-config="key=terraform.tfstate"
 
     - name: Terraform Apply
       run: terraform apply -auto-approve 
