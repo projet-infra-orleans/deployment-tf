@@ -1,0 +1,48 @@
+name: 'Deploy QA or PROD'
+
+on:
+  push:
+    branches: [ "feature/fd" ]
+
+env:
+  DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+  DEPLOY_PASSWORD : ${{ secrets.DEPLOY_PASSWORD }}
+  TF_VAR_environment : "pr"
+  AZ_TOKEN  : ${{ secrets.AZ_TOKEN }}
+  TOKEN_GANDI  : ${{ secrets.TOKEN_GANDI }}
+
+permissions:
+  contents: read
+
+jobs:   
+  terraform:
+    name: 'deploy production'
+    runs-on: ubuntu-latest
+    container: registry.gitlab.com/justin.lecas/infrastructure-terraform-m2-miage-cours/tf:1.0.0
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: connexion avec user et passsword 
+      run: az login --user ${{ env.DEPLOY_USERNAME }} --password ${{ env.DEPLOY_PASSWORD}}
+
+    - name: préciser la bonne subscription
+      run: az account set --subscription ${{ env.AZ_TOKEN }}
+
+    - name: synchronise l historique
+      run: terraform init -backend-config="resource_group_name=groupe-1-infra-deploy" -backend-config="storage_account_name=gr1infradeploystock" -backend-config="container_name=tfstate$TF_VAR_environment" -backend-config="key=terraform.tfstate"
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve 
+
+    - name: connecter le cluster aks 
+      run: az aks get-credentials --resource-group groupe-1-infra-deploy --name aks-${{ env.TF_VAR_environment }}
+
+    - name: récupérer l ip 
+      run: |
+        ip_address=$(kubectl get svc ingress-nginx-controller -n ingress-basic -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+      
+    - name: mettre à jour gandi 
+      run: ./update-gandi-ip.sh $ip_address ${{ env.TOKEN_GANDI }} froissant.work ${{ env.TF_VAR_environment }}
