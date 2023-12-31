@@ -39,6 +39,7 @@ resource "kubectl_manifest" "create_namespace" {
 resource "kubectl_manifest" "secret_url_mongo" {
   depends_on = [helm_release.akv2k8] 
   yaml_body  = "${templatefile("${path.module}/vault/secret-url-mongo-db.yaml", {
-		dns = var.environment
+		dns = var.environment,
+    vault_name = var.vault_key_name
 	})}"
 }
