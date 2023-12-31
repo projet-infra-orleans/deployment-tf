@@ -17,7 +17,8 @@ permissions:
 jobs:   
   terraform:
     name: 'deploy production'
-    runs-on: registry.gitlab.com/justin.lecas/infrastructure-terraform-m2-miage-cours/tf:1.0.0
+    runs-on: ubuntu-latest
+    container: registry.gitlab.com/justin.lecas/infrastructure-terraform-m2-miage-cours/tf:1.0.0
     environment: production
 
     steps:
