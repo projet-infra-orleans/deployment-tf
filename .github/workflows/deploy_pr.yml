@@ -1,4 +1,5 @@
-name : "Deploy Pr"
+name : "Deploy PR"
+
 on:
   push:
     branches: [ "main" ]
@@ -18,7 +19,7 @@ jobs:
     name: 'deploy pr'
     runs-on: ubuntu-latest
     container: registry.gitlab.com/justin.lecas/infrastructure-terraform-m2-miage-cours/tf:1.0.0
-    environment: qa
+    environment: pr
     env:
       TF_VAR_resource_group_name: groupe-1-infra-deploy-${{ env.TF_VAR_environment }}
       TF_VAR_vault_key_name: gr1-az-key-vault-${{ env.TF_VAR_environment }}
