@@ -11,7 +11,9 @@ env:
   TOKEN_GANDI  : ${{ secrets.TOKEN_GANDI }}
   AZ_TOKEN: ${{ secrets.AZ_SUBSCRIPTION_PR }}
   TF_VAR_environment: pr
-  
+  TF_VAR_resource_group_name: groupe-1-infra-deploy-pr
+  TF_VAR_vault_key_name: gr1-az-key-vault-pr
+  TF_VAR_stockage_name: gr1infradeploystockpr
 
 permissions:
   contents: read
@@ -22,10 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     container: registry.gitlab.com/justin.lecas/infrastructure-terraform-m2-miage-cours/tf:1.0.0
     environment: pr
-    env:
-      TF_VAR_resource_group_name: groupe-1-infra-deploy-${{ env.TF_VAR_environment }}
-      TF_VAR_vault_key_name: gr1-az-key-vault-${{ env.TF_VAR_environment }}
-      TF_VAR_stockage_name: gr1infradeploystock${{ env.TF_VAR_environment }}
 
     steps:
     - name: Checkout
@@ -49,6 +47,7 @@ jobs:
     - name: récupérer l ip 
       run: |
         ip_address=$(kubectl get svc ingress-nginx-controller -n ingress-basic -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-      
+        echo "ip_address=$ip_address" >> $GITHUB_ENV
+        
     - name: mettre à jour gandi 
-      run: ./update-gandi-ip.sh $ip_address ${{ env.TOKEN_GANDI }} froissant.work ${{ env.TF_VAR_environment }}
+      run: ./update-gandi-ip.sh ${{ env.ip_address }} ${{ env.TOKEN_GANDI }} froissant.work ${{ env.TF_VAR_environment }}
