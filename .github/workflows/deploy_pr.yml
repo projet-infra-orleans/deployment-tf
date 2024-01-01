@@ -11,6 +11,7 @@ env:
   TOKEN_GANDI  : ${{ secrets.TOKEN_GANDI }}
   AZ_TOKEN: ${{ secrets.AZ_SUBSCRIPTION_PR }}
   TF_VAR_environment: pr
+  
 
 permissions:
   contents: read
